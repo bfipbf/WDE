@@ -20,6 +20,7 @@ jobs:
     timeout-minutes: 5
     env:
       PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
+      PRIVATE_REPO: ${{ vars.PRIVATE_REPO }}
       PUBLIC_TOKEN: ${{ github.token }}
       EVENT_NAME: ${{ github.event_name }}
       EVENT_ACTION: ${{ github.event.action }}
