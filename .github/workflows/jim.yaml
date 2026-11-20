@@ -21,11 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
-      SF_BFI_PROD_LOGIN_URL: ${{ vars.SF_BFI_PROD_LOGIN_URL }}
-      SF_BFI_PROD_APIKEY: ${{ secrets.SF_BFI_PROD_APIKEY }}
+      SF_CLIENT_URL: ${{ vars.SF_CLIENT_URL }}
+      SF_CLIENT_APIKEY: ${{ secrets.SF_CLIENT_APIKEY }}
       ISSUE_BODY: ${{ github.event.issue.body }}
       ISSUE_NUMBER: ${{ github.event.issue.number }}
-      PRIVATE_PBF_TOKEN: ${{ secrets.PRIVATE_PBF_TOKEN }}
+      PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -116,7 +116,7 @@ jobs:
       - name: Publish Bash output to linked PRIVATE-PBF Issue only
         env:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
-          PRIVATE_PBF_TOKEN: ${{ secrets.PRIVATE_PBF_TOKEN }}
+          PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
           EVIDENCE_FILE: ${{ runner.temp }}/jim-bash-result/jim-bash-comment.md
           EVIDENCE_KIND: bash
           ISSUE_BODY: ${{ github.event.issue.body }}
