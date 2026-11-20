@@ -1,0 +1,39 @@
+name: Mirror public issues to private audit
+on:
+  issues:
+    types: [opened, edited]
+  issue_comment:
+    types: [created, edited]
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: private-mirror-${{ github.event.issue.number }}
+  cancel-in-progress: false
+jobs:
+  mirror:
+    if: >-
+      contains(fromJSON('["jimmytobing","098595","bfipbf"]'), github.actor) &&
+      contains(fromJSON('["jimmytobing","098595","bfipbf"]'), github.event.issue.user.login) &&
+      !github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PRIVATE_PBF_TOKEN: ${{ secrets.PRIVATE_PBF_TOKEN }}
+      PUBLIC_TOKEN: ${{ github.token }}
+      EVENT_NAME: ${{ github.event_name }}
+      EVENT_ACTION: ${{ github.event.action }}
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Ensure private token is configured
+        shell: bash
+        run: |
+          if [[ -z "$PRIVATE_PBF_TOKEN" ]]; then
+            echo "BLOCKED - PRIVATE_PBF_TOKEN is missing"
+            exit 1
+          fi
+      - name: Upsert private issue and comment
+        run: node .github/mjs/mirror-issue.mjs
