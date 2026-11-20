@@ -2,13 +2,13 @@ import fs from "node:fs/promises";
 
 const PUBLIC = "bfipbf/SILENT-PBF";
 const PRIVATE = "bfipbf/PRIVATE-PBF";
-const token = process.env.PRIVATE_PBF_TOKEN;
+const token = process.env.PRIVATE_TOKEN;
 const issue = Number(process.env.ISSUE_NUMBER);
 const file = process.env.EVIDENCE_FILE;
 const marker = "<!-- silent-pbf-issue:" + issue + " -->";
 const publishMarker = "<!-- jim-evidence:" + process.env.GITHUB_RUN_ID + ":" + (process.env.EVIDENCE_KIND || "request") + " -->";
 
-if (!token) throw Error("PRIVATE_PBF_TOKEN missing; refusing public fallback.");
+if (!token) throw Error("PRIVATE_TOKEN missing; refusing public fallback.");
 if (!Number.isSafeInteger(issue) || issue < 1) throw Error("Invalid issue number.");
 if (!file) throw Error("EVIDENCE_FILE missing.");
 
