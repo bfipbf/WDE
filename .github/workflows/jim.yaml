@@ -118,7 +118,7 @@ jobs:
         env:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
-      PRIVATE_REPO: ${{ vars.PRIVATE_REPO }}
+          PRIVATE_REPO: ${{ vars.PRIVATE_REPO }}
           EVIDENCE_FILE: ${{ runner.temp }}/jim-bash-result/jim-bash-comment.md
           EVIDENCE_KIND: bash
           ISSUE_BODY: ${{ github.event.issue.body }}
