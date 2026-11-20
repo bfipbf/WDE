@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
-      PRIVATE_PBF_TOKEN: ${{ secrets.PRIVATE_PBF_TOKEN }}
+      PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
       PUBLIC_TOKEN: ${{ github.token }}
       EVENT_NAME: ${{ github.event_name }}
       EVENT_ACTION: ${{ github.event.action }}
@@ -31,8 +31,8 @@ jobs:
       - name: Ensure private token is configured
         shell: bash
         run: |
-          if [[ -z "$PRIVATE_PBF_TOKEN" ]]; then
-            echo "BLOCKED - PRIVATE_PBF_TOKEN is missing"
+          if [[ -z "$PRIVATE_TOKEN" ]]; then
+            echo "BLOCKED - PRIVATE_TOKEN is missing"
             exit 1
           fi
       - name: Upsert private issue and comment
