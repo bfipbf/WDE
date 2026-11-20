@@ -26,6 +26,7 @@ jobs:
       ISSUE_BODY: ${{ github.event.issue.body }}
       ISSUE_NUMBER: ${{ github.event.issue.number }}
       PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
+      PRIVATE_REPO: ${{ vars.PRIVATE_REPO }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -117,6 +118,7 @@ jobs:
         env:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
+      PRIVATE_REPO: ${{ vars.PRIVATE_REPO }}
           EVIDENCE_FILE: ${{ runner.temp }}/jim-bash-result/jim-bash-comment.md
           EVIDENCE_KIND: bash
           ISSUE_BODY: ${{ github.event.issue.body }}
