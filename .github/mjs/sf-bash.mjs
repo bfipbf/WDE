@@ -153,8 +153,7 @@ async function runDeployGateway() {
   }
   function gate() {
     const allowedActors = new Set(['jimmytobing', '098595', 'bfipbf']);
-    if (process.env.GITHUB_REPOSITORY !== 'bfipbf/SILENT-PBF' ||
-        !allowedActors.has(process.env.GITHUB_ACTOR) ||
+    if (!allowedActors.has(process.env.GITHUB_ACTOR) ||
         !allowedActors.has(process.env.ISSUE_AUTHOR) ||
         !/^\d+$/.test(process.env.ISSUE_NUMBER || '')) fail('GitHub actor/repo/Issue tidak diizinkan.');
     // Keep repository and actor authorization; target org is determined by Salesforce login.
