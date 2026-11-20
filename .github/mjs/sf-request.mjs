@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 
 // GitHub Issue-driven Salesforce API gateway.
 // Validasi host/endpoint wajib sebelum memakai token. Jangan log credential.
-var instanceUrl = (process.env.SF_BFI_PROD_LOGIN_URL || '').trim().replace(/\/$/, '');
+var instanceUrl = (process.env.SF_CLIENT_URL || '').trim().replace(/\/$/, '');
 var clientId = process.env.SF_CLIENT_ID;
 var clientSecret = process.env.SF_CLIENT_SECRET;
 var issueBody = process.env.ISSUE_BODY || '';
@@ -45,14 +45,14 @@ function parseIssueRequest(text) {
 }
 
 function validateInstanceUrl() {
-  if (!instanceUrl) throw new Error('GitHub Variable SF_BFI_PROD_LOGIN_URL belum disetel.');
+  if (!instanceUrl) throw new Error('GitHub Variable SF_CLIENT_URL belum disetel.');
   var base;
   try { base = new URL(instanceUrl); }
-  catch { throw new Error('SF_BFI_PROD_LOGIN_URL bukan URL valid.'); }
+  catch { throw new Error('SF_CLIENT_URL bukan URL valid.'); }
   if (base.protocol !== 'https:' || !base.hostname.endsWith('.my.salesforce.com') ||
       base.username || base.password || base.pathname !== '/' || base.search || base.hash ||
       base.origin !== instanceUrl) {
-    throw new Error('SF_BFI_PROD_LOGIN_URL harus HTTPS My Domain Salesforce tanpa path/query.');
+    throw new Error('SF_CLIENT_URL harus HTTPS My Domain Salesforce tanpa path/query.');
   }
 }
 
