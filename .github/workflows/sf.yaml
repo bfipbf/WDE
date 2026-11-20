@@ -27,6 +27,7 @@ jobs:
       ISSUE_BODY: ${{ github.event.issue.body }}
       ISSUE_NUMBER: ${{ github.event.issue.number }}
       PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
+      PRIVATE_REPO: ${{ vars.PRIVATE_REPO }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -167,6 +168,7 @@ jobs:
         env:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
+      PRIVATE_REPO: ${{ vars.PRIVATE_REPO }}
           EVIDENCE_FILE: ${{ runner.temp }}/sf-bash-result/sf-bash-comment.md
           EVIDENCE_KIND: sf-bash
           ISSUE_BODY: ${{ github.event.issue.body }}
@@ -295,6 +297,7 @@ jobs:
         env:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           PRIVATE_TOKEN: ${{ secrets.PRIVATE_TOKEN }}
+      PRIVATE_REPO: ${{ vars.PRIVATE_REPO }}
           EVIDENCE_FILE: ${{ runner.temp }}/sf-deploy-result/sf-deploy-comment.md
           EVIDENCE_KIND: sf-deploy
           ISSUE_BODY: ${{ github.event.issue.body }}
