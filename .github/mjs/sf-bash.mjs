@@ -152,11 +152,11 @@ async function runDeployGateway() {
     return req;
   }
   function gate() {
-    const allowedActors = new Set(['jimmytobing', '098595', 'bfipbf']);
+    const allowedActors = new Set((process.env.PRIVATE_USER || '').split(',').map(user => user.trim()).filter(Boolean));
     if (!allowedActors.has(process.env.GITHUB_ACTOR) ||
         !allowedActors.has(process.env.ISSUE_AUTHOR) ||
-        !/^\d+$/.test(process.env.ISSUE_NUMBER || '')) fail('GitHub actor/repo/Issue tidak diizinkan.');
-    // Keep repository and actor authorization; target org is determined by Salesforce login.
+        !/^\d+$/.test(process.env.ISSUE_NUMBER || '')) fail('GitHub actor/Issue tidak diizinkan.');
+    // Keep actor and issue authorization; target org is determined by Salesforce login.
     return parseRequest(process.env.ISSUE_BODY || '');
   }
   function inspectManifest(req) {
