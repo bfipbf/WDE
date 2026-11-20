@@ -15,8 +15,8 @@ concurrency:
 jobs:
   sf-request:
     if: >-
-      contains(fromJSON('["jimmytobing","098595","bfipbf"]'), github.actor) &&
-      contains(fromJSON('["jimmytobing","098595","bfipbf"]'), github.event.issue.user.login) &&
+      contains(format(',{0},', vars.PRIVATE_USER), format(',{0},', github.actor)) &&
+      contains(format(',{0},', vars.PRIVATE_USER), format(',{0},', github.event.issue.user.login)) &&
       contains(github.event.issue.body, '### Sf Request')
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -59,8 +59,8 @@ jobs:
 
   sf-bash:
     if: >-
-      contains(fromJSON('["jimmytobing","098595","bfipbf"]'), github.actor) &&
-      contains(fromJSON('["jimmytobing","098595","bfipbf"]'), github.event.issue.user.login) &&
+      contains(format(',{0},', vars.PRIVATE_USER), format(',{0},', github.actor)) &&
+      contains(format(',{0},', vars.PRIVATE_USER), format(',{0},', github.event.issue.user.login)) &&
       contains(github.event.issue.body, '### Sf Bash')
     permissions:
       contents: read
@@ -177,8 +177,8 @@ jobs:
 
   sf-deploy:
     if: >-
-      contains(fromJSON('["jimmytobing","098595","bfipbf"]'), github.actor) &&
-      contains(fromJSON('["jimmytobing","098595","bfipbf"]'), github.event.issue.user.login) &&
+      contains(format(',{0},', vars.PRIVATE_USER), format(',{0},', github.actor)) &&
+      contains(format(',{0},', vars.PRIVATE_USER), format(',{0},', github.event.issue.user.login)) &&
       contains(github.event.issue.body, '### Sf Deploy')
     permissions:
       contents: read
@@ -188,6 +188,7 @@ jobs:
       ISSUE_BODY: ${{ github.event.issue.body }}
       ISSUE_NUMBER: ${{ github.event.issue.number }}
       ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+      PRIVATE_USER: ${{ vars.PRIVATE_USER }}
       SF_CLIENT_URL: ${{ vars.SF_CLIENT_URL }}
       CANDIDATE_DIR: ${{ github.workspace }}/candidate
     steps:
