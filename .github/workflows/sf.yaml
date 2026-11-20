@@ -177,7 +177,6 @@ jobs:
 
   sf-deploy:
     if: >-
-      github.repository == 'bfipbf/SILENT-PBF' &&
       contains(fromJSON('["jimmytobing","098595","bfipbf"]'), github.actor) &&
       contains(fromJSON('["jimmytobing","098595","bfipbf"]'), github.event.issue.user.login) &&
       contains(github.event.issue.body, '### Sf Deploy')
