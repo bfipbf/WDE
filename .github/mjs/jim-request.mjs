@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import dns from "node:dns/promises";
 import net from "node:net";
 
-const apiKey = process.env.SF_BFI_PROD_APIKEY || "";
+const apiKey = process.env.SF_CLIENT_APIKEY || "";
 const issueBody = process.env.ISSUE_BODY || "";
 const evidenceFile = (process.env.RUNNER_TEMP || "/tmp") + "/jim-request-comment.md";
 const fence = "\x60\x60\x60";
@@ -103,7 +103,7 @@ async function main() {
     const headers = { "Accept": "application/json" };
     // Never forward the production key to an arbitrary destination.
     if (request.url.origin === credentialOrigin) {
-      if (!apiKey) throw new Error("GitHub Secret SF_BFI_PROD_APIKEY belum tersedia.");
+      if (!apiKey) throw new Error("GitHub Secret SF_CLIENT_APIKEY belum tersedia.");
       headers["X-Apikey"] = apiKey;
     }
     if (request.method === "POST") {
