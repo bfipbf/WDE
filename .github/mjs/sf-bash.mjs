@@ -135,7 +135,7 @@ async function runDeployGateway() {
     if (!req || Array.isArray(req) || typeof req !== 'object') fail('Request harus berupa JSON object.');
     if (Object.keys(req).some(k => !['mode','commit','manifest','preDestructiveChanges','postDestructiveChanges','tests','testLevel'].includes(k))) fail('Parameter Sf Deploy tidak dikenal.');
     if (!['validate','deploy'].includes(req.mode)) fail('mode hanya validate atau deploy.');
-    if (req.testLevel !== undefined && !['RunSpecifiedTests','RunLocalTests'].includes(req.testLevel)) fail('testLevel hanya RunSpecifiedTests atau RunLocalTests.');
+    if (req.testLevel !== undefined && !['RunSpecifiedTests','RunLocalTests','NoTestRun'].includes(req.testLevel)) fail('testLevel hanya RunSpecifiedTests, RunLocalTests, atau NoTestRun.');
     req.testLevel ??= 'RunSpecifiedTests';
     if (req.tests !== undefined && (!Array.isArray(req.tests) || req.tests.length < 1 || req.tests.length > 20 ||
         req.tests.some(t => typeof t !== 'string' || !/^[A-Za-z][A-Za-z0-9_]{0,79}$/.test(t)) ||
