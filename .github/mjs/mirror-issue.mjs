@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 
-const PUBLIC = 'bfipbf/SILENT-PBF';
-const PRIVATE = 'bfipbf/PRIVATE-PBF';
+const PUBLIC = process.env.GITHUB_REPOSITORY || 'bfipbf/WDE';
+const PRIVATE = (process.env.PRIVATE_REPO || '').trim();
+if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(PRIVATE)) throw Error('PRIVATE_REPO must be owner/repository.');
 const ev = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'));
 const issue = ev.issue;
 const n = issue?.number;
