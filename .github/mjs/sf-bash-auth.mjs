@@ -1,6 +1,6 @@
 import { spawnSync } from 'node:child_process';
 
-const rawUrl = (process.env.SF_BFI_PROD_LOGIN_URL || '').trim();
+const rawUrl = (process.env.SF_CLIENT_URL || '').trim();
 const clientId = process.env.SF_CLIENT_ID;
 const clientSecret = process.env.SF_CLIENT_SECRET;
 if (!clientId || !clientSecret) throw new Error('Salesforce OAuth secrets belum lengkap.');
@@ -13,7 +13,7 @@ try {
   }
   instanceUrl = url.origin;
 } catch {
-  throw new Error('SF_BFI_PROD_LOGIN_URL harus HTTPS My Domain Salesforce tanpa path/query.');
+  throw new Error('SF_CLIENT_URL harus HTTPS My Domain Salesforce tanpa path/query.');
 }
 const auth = await fetch(instanceUrl + '/services/oauth2/token', {
   method: 'POST',
