@@ -12,7 +12,7 @@ if (!allowed.has(actor) || !allowed.has(issue.user?.login)) {
   throw Error('BLOCKED: actor or issue author is not allowlisted');
 }
 const pubToken = process.env.PUBLIC_TOKEN;
-const privToken = process.env.PRIVATE_PBF_TOKEN;
+const privToken = process.env.PRIVATE_TOKEN;
 if (!pubToken || !privToken) throw Error('BLOCKED: required token missing');
 const marker = '<!-- silent-pbf-issue:' + n + ' -->';
 const purl = 'https://github.com/' + PUBLIC + '/issues/' + n;
