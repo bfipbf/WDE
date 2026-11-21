@@ -111,6 +111,17 @@ function validateRequest(input) {
 
 var MAX_RESPONSE_BYTES = 50000;
 var EVIDENCE_FILE = (process.env.RUNNER_TEMP || '/tmp') + '/sf-request-comment.md';
+
+// Bounded exception for exactly one long-running Salesforce Flow operation.
+// Issue authors cannot set timeouts or extend any other API operation.
+var DEFAULT_SF_TIMEOUT_MS = 30000;
+var AUDIO_QA_SF_TIMEOUT_MS = 150000;
+function sfRequestTimeoutMs(parsed) {
+  var isAudioQa = parsed.method === 'POST' &&
+    /^\/services\/data\/v[0-9]+\.[0-9]+\/actions\/custom\/flow\/WDE_Verify_Sermon_Segment_Audio$/.test(parsed.url.pathname) &&
+    parsed.url.search === '';
+  return isAudioQa ? AUDIO_QA_SF_TIMEOUT_MS : DEFAULT_SF_TIMEOUT_MS;
+}
 var maskKey = /(?:token|secret|password|authorization|credential|api[_-]?key)/i;
 
 function sanitize(value, secrets = [], depth = 0) {
@@ -223,7 +234,7 @@ async function main() {
       headers: parsed.headers,
       body: parsed.body,
       redirect: 'error',
-      signal: AbortSignal.timeout(30000),
+      signal: AbortSignal.timeout(sfRequestTimeoutMs(parsed)),
     });
     data = await readResponse(response);
     await writeEvidence({ parsed, response, data, secrets: [clientId, clientSecret, accessToken] });
