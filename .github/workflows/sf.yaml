@@ -207,6 +207,11 @@ jobs:
         if: steps.route.outcome == 'success'
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          # Candidate SHA belongs to the configured PRIVATE_REPO, not this gateway repo.
+          # Both configuration values are repository-admin-controlled; the Issue supplies
+          # only an immutable SHA, never repository identity, credentials or checkout args.
+          repository: ${{ vars.PRIVATE_REPO }}
+          token: ${{ secrets.PRIVATE_TOKEN }}
           ref: ${{ steps.route.outputs.sha }}
           persist-credentials: false
           path: candidate
